@@ -102,5 +102,10 @@ public class Corso extends Nodo {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return String.format("%s\n", codins);
+	}
 	
 }

@@ -1,9 +1,11 @@
 package it.polito.tdp.gestionale.model;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.jgrapht.Graphs;
 import org.jgrapht.graph.DefaultEdge;
@@ -77,12 +79,88 @@ public class Model {
 		for (Integer i : str.keySet()) {
 			s+= "studenti iscritti a"+i+"corso/i : "+str.get(i)+"\n";
 		}
-//		System.out.println(str.toString());
-//		System.out.println("N. vertici : "+grafo.vertexSet().size());
-//		System.out.println("N. archi : "+grafo.edgeSet().size());
+	System.out.println(str.toString());
+	System.out.println("N. vertici : "+grafo.vertexSet().size());
+	System.out.println("N. archi : "+grafo.edgeSet().size());
 	}
 	public String getS() {
 		return s;
 	}
+	public List<Corso> TrovaSequenza() {
+		List <Corso> parziale = new LinkedList < Corso>();
+		List <Corso> finale = new LinkedList <Corso>();
+		//System.out.println(studenti.size());
+		
+		cerca (parziale, finale,  0);
+		return finale;
+	}
+	
+	
+	
+	
+	
+	private void cerca(List<Corso> parziale, List<Corso> finale, int livello) {
+		if (livello == studenti.size()) {
+			if ( finale.size()==0 ) {
+				finale.clear();
+				finale.addAll(parziale);
+				System.out.println(finale.toString());
+			
+			}else if (finale.size()>parziale.size()) {
+				finale.clear();
+				finale.addAll(parziale);
+				System.out.println(finale.toString());
+			}
+			return;
+		}
+		for(Corso c : corsi) {
+			    if (!parziale.contains(c)) {
+			    int l = nuovoLivello (parziale, c , livello);
+				parziale.add(c);
+				//System.out.println(parziale.toString());
+				cerca(parziale, finale, l);
+				parziale.remove(parziale.size()-1);
+			    }
+			}
+			
+		}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	private int nuovoLivello(List <Corso>parziale, Corso c, int livello) {
+		int cp =0;
+		List <Studente> sp = new LinkedList<>();
+		
+		for (Corso corso : parziale) {
+			for (Studente stud : corso.getStudenti()) {
+				if (!sp.contains(stud)) {
+					sp.add(stud);
+				}
+			}
+		}
+		for (Studente stud : c.getStudenti()) {
+			if (!sp.contains(stud)) {
+				sp.add(stud);
+			}
+		}
+		
+		//System.out.println(sp.size());
+		return sp.size();
+	}
+
+
 	
 }
+
