@@ -1,10 +1,12 @@
 package it.polito.tdp.gestionale.model;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
-public class Studente {
+public class Studente extends Nodo implements Comparable<Studente>{
 
+	
 	private List<Corso> corsi;
 	private int matricola;
 	private String cognome;
@@ -12,21 +14,25 @@ public class Studente {
 	private String cds;
 
 	public Studente(int matricola) {
+		super ();
 		this.matricola = matricola;
+		corsi = new LinkedList<>();
 	}
 
 	public Studente(int matricola, String cognome, String nome, String cds) {
+		super();
 		this.matricola = matricola;
 		this.cognome = cognome;
 		this.nome = nome;
 		this.cds = cds;
+		corsi = new LinkedList<>();
 	}
 
 	/*
 	 * Getters and Setters
 	 */
 	public int getMatricola() {
-		return matricola;
+		return this.matricola;
 	}
 
 	public void setMatricola(int matricola) {
@@ -70,7 +76,41 @@ public class Studente {
 		return corsi;
 	}
 
-	public void setCorsi(List<Corso> corsi) {
-		this.corsi = corsi;
+	public void setCorsi(Corso c) {
+		this.corsi.add(c);
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + matricola;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Studente other = (Studente) obj;
+		if (matricola != other.matricola)
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("%s, %s, %s, %s\n", matricola, cognome, nome, cds);
+	}
+
+
+	@Override
+	public int compareTo(Studente s) {
+		return this.corsi.size()-s.getCorsi().size();
+	}
+	
 }

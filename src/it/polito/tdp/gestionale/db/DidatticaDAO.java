@@ -34,6 +34,7 @@ public class DidatticaDAO {
 				Studente studente = mapStudenti.get(matricola);
 				if (studente != null) {
 					studentiIscrittiAlCorso.add(studente);
+					
 				} else {
 					System.out.println("ERRORE! Lo studente non è presente!");
 				}

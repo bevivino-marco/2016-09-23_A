@@ -29,6 +29,13 @@ public class DidatticaGestionaleController {
 	void doCorsiFrequentati(ActionEvent event) {
 		txtResult.clear();
 		txtResult.setText("premuto Corsi Frequentati");
+		try {
+			model.creaGrafo();
+			txtResult.setText(model.getS());
+			
+		}catch (Exception e ) {
+			txtResult.setText("Errore ,,,premuto Corsi Frequentati");
+		}
 	}
 	
 	@FXML
